@@ -28,13 +28,24 @@
       margin-top: 1em;
     }
     nav a {
-      margin: 0 0.8em;
-      text-decoration: none;
-      color: #111;
-      font-weight: bold;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      border-top: 1px solid #eee;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      padding: 1em 0;
+      gap: 3em;
+     border-top: 1px solid rgba(0,0,0,0.1);
     }
     nav a:hover {
       text-decoration: underline;
+    }
+    .external::after {
+      content: " ↗";
+      font-size: 0.85em;
     }
     footer {
       position: absolute;
@@ -52,9 +63,8 @@
     <a href="/">Home</a>
     <a href="/blog">Blog</a>
     <a href="/about">About</a>
-    <a href="https://twitter.com/ekpinudori" target="_blank" rel="noopener">Twitter</a>
-    <a href="https://github.com/thisudoriguy" target="_blank" rel="noopener">GitHub</a>
-    <!-- add more links as needed -->
+    <a href="https://twitter.com/ekpinudori" target="_blank" rel="noopener" class="external">Twitter</a>
+    <a href="https://github.com/thisudoriguy" target="_blank" rel="noopener" class="external">GitHub</a>
   </nav>
 
   <footer>
