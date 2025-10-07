@@ -25,27 +25,45 @@
       margin: 0.5em 0;
     }
     nav {
-      margin-top: 1em;
-    }
-    nav a {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      border-top: 1px solid #eee;
+      border-top: 1px solid rgba(0,0,0,0.1); /* thin, subtle divider */
       background: #fff;
       display: flex;
       justify-content: center;
       padding: 1em 0;
-      gap: 3em;
-     border-top: 1px solid rgba(0,0,0,0.1);
+      gap: 3em; /* spacing between items */
     }
-    nav a:hover {
-      text-decoration: underline;
+    nav a {
+      position: relative;
+      text-decoration: none;
+      color: #3b4252;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #3b4252;
+      transition: width 0.2s ease-in-out;
+    }
+    nav a:hover::after {
+      width: 100%;
     }
     .external::after {
       content: " ↗";
       font-size: 0.85em;
+      position: static;
+      margin-left: 0.25em;
+      background: none;
+      transition: none;
     }
     footer {
       position: absolute;
