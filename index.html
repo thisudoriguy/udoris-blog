@@ -2,91 +2,142 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Udori Ekpin</title>
   <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --ink: #111;
+      --muted: #555;
+      --link: #3b4252;
+      --hairline: rgba(0, 0, 0, 0.1);
+      --nav-h: 4rem; /* space reserved at the bottom for the fixed nav */
+    }
+
+    html { -webkit-text-size-adjust: 100%; }
+
     body {
       margin: 0;
-      padding: 0;
-      font-family:Segoe UI,Roboto,Arial,sans-serif;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;   /* fallback */
+      min-height: 100dvh;  /* avoids the mobile 100vh clipping bug */
+      background-color: #fff;
+      color: var(--ink);
+      /* keep centered content + footer clear of the fixed nav */
+      padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
+    }
+
+    main {
+      flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      background-color: white;
-      color: #111;
+      text-align: center;
+      padding: 1.5rem;
     }
+
     h1 {
-      font-size: 3em;
+      font-size: clamp(2rem, 8vw, 3rem);
+      line-height: 1.1;
       margin: 0.2em 0;
     }
-    p {
-      margin: 0.5em 0;
+
+    main p { margin: 0.5em 0; }
+
+    .email {
+      color: var(--muted);
+      text-decoration: none;
     }
+    .email:hover { text-decoration: underline; }
+
+    footer {
+      text-align: center;
+      font-size: 0.9em;
+      color: var(--muted);
+      padding: 0 1rem 1rem;
+    }
+
     nav {
       position: fixed;
       bottom: 0;
       left: 0;
       width: 100%;
-      border-top: 1px solid rgba(0,0,0,0.1); /* thin, subtle divider */
+      border-top: 1px solid var(--hairline);
       background: #fff;
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
-      padding: 1em 0;
-      gap: 3em; /* spacing between items */
+      gap: 2.5em;
+      padding: 1em 1em calc(1em + env(safe-area-inset-bottom, 0px));
     }
+
     nav a {
       position: relative;
       text-decoration: none;
-      color: #3b4252;
+      color: var(--link);
       font-weight: 600;
       display: inline-flex;
       align-items: center;
+      padding: 0.2em 0; /* roomier tap target */
     }
+
     nav a::after {
       content: "";
       position: absolute;
-      bottom: -4px;
+      bottom: 0;
       left: 0;
       width: 0;
       height: 2px;
-      background: #3b4252;
+      background: var(--link);
       transition: width 0.2s ease-in-out;
     }
-    nav a:hover::after {
-      width: 100%;
+
+    nav a:hover::after,
+    nav a:focus-visible::after { width: 100%; }
+
+    nav a:focus-visible {
+      outline: 2px solid var(--link);
+      outline-offset: 4px;
+      border-radius: 2px;
     }
-    .external::after {
-      content: " ↗";
+
+    /* external-link arrow as real inline text, so the underline still works */
+    .external .arrow {
       font-size: 0.85em;
-      position: static;
       margin-left: 0.25em;
-      background: none;
-      transition: none;
     }
-    footer {
-      position: absolute;
-      bottom: 1em;
-      font-size: 0.9em;
-      color: #555;
+
+    @media (max-width: 480px) {
+      nav { gap: 1.5em; }
+    }
+
+    @media (max-width: 360px) {
+      nav { gap: 0.9em; font-size: 0.9rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      nav a::after { transition: none; }
     }
   </style>
 </head>
 <body>
-  <h1>Udori Ekpin</h1>
-  <p>u@udoriekpin.com</p>
+  <main>
+    <h1>Udori Ekpin</h1>
+    <p><a class="email" href="mailto:u@udoriekpin.com">u@udoriekpin.com</a></p>
+  </main>
 
-  <nav>
+  <footer>&copy; 2025 Udori Ekpin</footer>
+
+  <nav aria-label="Primary">
     <a href="/">Home</a>
     <a href="/blog">Blog</a>
     <a href="/about">About</a>
-    <a href="https://twitter.com/ekpinudori" target="_blank" rel="noopener" class="external">Twitter</a>
-    <a href="https://github.com/thisudoriguy" target="_blank" rel="noopener" class="external">GitHub</a>
+    <a href="https://twitter.com/ekpinudori" target="_blank" rel="noopener" class="external">Twitter<span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="https://github.com/thisudoriguy" target="_blank" rel="noopener" class="external">GitHub<span class="arrow" aria-hidden="true">↗</span></a>
   </nav>
-
-  <footer>
-    &copy; 2025 Udori Ekpin
-  </footer>
 </body>
 </html>
