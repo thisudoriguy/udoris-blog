@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Notes · Udori Ekpin</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --bg: #fcfcfa;
+      --ink: #16181d;
+      --body: #2c2f36;
+      --muted: #6a6e76;
+      --accent: #33485d;
+      --flag: #a23b3b;
+      --hairline: rgba(20, 22, 28, 0.12);
+
+      --serif: "Iowan Old Style", "Charter", "Palatino Linotype", Palatino, Georgia, serif;
+      --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --mono: "SF Mono", "JetBrains Mono", "IBM Plex Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+      --nav-h: 4rem;
+    }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      min-height: 100dvh;
+      background-color: var(--bg);
+      color: var(--body);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
+    }
+
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 640px;
+      margin-inline: auto;
+      padding: clamp(3.5rem, 10vh, 6rem) 1.5rem 0;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: clamp(2.4rem, 7vw, 3.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin: 0;
+      color: var(--ink);
+    }
+
+    .tagline {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(1.25rem, 3.5vw, 1.6rem);
+      line-height: 1.3;
+      color: var(--ink);
+      margin: 0.5em 0 0.9em;
+    }
+
+    .kicker {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 1.6em;
+    }
+
+    .bio { font-size: 1.075rem; margin: 0; max-width: 60ch; }
+
+    main a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      text-decoration-color: var(--hairline);
+      transition: text-decoration-color 0.15s ease;
+    }
+    main a:hover { text-decoration-color: var(--accent); }
+
+    section {
+      margin-top: 2.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--hairline);
+    }
+
+    h2 {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-weight: 500;
+      color: var(--muted);
+      margin: 0 0 1.1rem;
+    }
+
+    ul.stack { list-style: none; margin: 0; padding: 0; }
+    ul.stack li { margin: 0 0 0.55rem; }
+
+    .muted { color: var(--muted); }
+    .flag  { color: var(--flag); }
+
+    /* projects / holding structure */
+    .proj-head { display: flex; align-items: baseline; gap: 0.65rem; flex-wrap: wrap; }
+    .proj-name { font-weight: 600; color: var(--ink); font-size: 1.05rem; }
+    a.proj-name { text-decoration: none; }
+    a.proj-name:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--accent); }
+    .proj-desc { margin: 0.3rem 0 0; color: var(--body); }
+
+    .entry + .entry { margin-top: 1.8rem; }
+    .entry > .proj-head .proj-name {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      letter-spacing: -0.01em;
+    }
+    .entry > .proj-desc { max-width: 60ch; }
+
+    ul.holdings {
+      list-style: none;
+      margin: 1.2rem 0 0;
+      padding-left: 1.25rem;
+      border-left: 2px solid var(--hairline);
+    }
+    ul.holdings li { padding: 0.85rem 0; }
+    ul.holdings li:first-child { padding-top: 0.1rem; }
+    ul.holdings li + li { border-top: 1px solid var(--hairline); }
+
+    .role {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0.35rem 0 0;
+    }
+    .clients { margin: 0.6rem 0 0; max-width: 60ch; }
+    .clients-label {
+      font-family: var(--mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-right: 0.55rem;
+    }
+    .cta { margin: 0.75rem 0 0; }
+    .cta a { font-size: 0.95rem; }
+
+    /* collapsible Crossharbour */
+    details.crossharbour { }
+    .crossharbour > summary {
+      cursor: pointer;
+      list-style: none;
+    }
+    .crossharbour > summary::-webkit-details-marker { display: none; }
+    .crossharbour > summary::marker { content: ""; }
+    .chev {
+      align-self: center;
+      margin-left: auto;
+      flex: none;
+      width: 0.45em;
+      height: 0.45em;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: rotate(-45deg);
+      transition: transform 0.2s ease;
+    }
+    .crossharbour[open] > summary .chev { transform: rotate(45deg); }
+    .crossharbour > summary:hover .chev { border-color: var(--accent); }
+    .crossharbour > summary:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+      border-radius: 3px;
+    }
+
+    /* work history */
+    .role-company { font-weight: 600; color: var(--ink); }
+    .role-desc { margin: 0.3rem 0 0; color: var(--body); max-width: 60ch; }
+
+    .more-work { margin-top: 1.5rem; }
+    .more-work > summary {
+      cursor: pointer;
+      list-style: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .more-work > summary::-webkit-details-marker { display: none; }
+    .more-work > summary::marker { content: ""; }
+    .more-work > summary:hover { color: var(--accent); }
+    .more-work > summary .chev { margin-left: 0.1rem; align-self: center; }
+    .more-work[open] > summary .chev { transform: rotate(45deg); }
+    .more-work .roles { list-style: none; margin: 1.3rem 0 0; padding: 0; }
+    .more-work .role-item + .role-item { margin-top: 1.2rem; }
+    .role-company .tag { margin-left: 0.45rem; vertical-align: middle; }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--hairline);
+      border-radius: 100px;
+      padding: 0.15em 0.6em;
+      white-space: nowrap;
+    }
+
+    .note { font-size: 0.85rem; color: var(--muted); font-style: italic; margin-top: 0.9rem; }
+
+    .copy {
+      font: inherit;
+      color: var(--accent);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--hairline);
+    }
+    .copy:hover { text-decoration-color: var(--accent); }
+
+    .links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; align-items: baseline; }
+    .links a, .links .copy { font-size: 1rem; }
+    .links a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      text-decoration-color: var(--hairline);
+    }
+    .links a:hover { text-decoration-color: var(--accent); }
+    .links a.flag { color: var(--flag); text-decoration-color: rgba(162,59,59,0.35); }
+    code { font-family: var(--mono); font-size: 0.85em; }
+
+    footer {
+      font-family: var(--mono);
+      text-align: center;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      padding: 3.5rem 1rem 1rem;
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      border-top: 1px solid var(--hairline);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: saturate(180%) blur(8px);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2.5em;
+      padding: 1em 1em calc(1em + env(safe-area-inset-bottom, 0px));
+    }
+
+    nav a {
+      position: relative;
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2em 0;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.2s ease-in-out;
+    }
+    nav a:hover::after, nav a:focus-visible::after { width: 100%; }
+
+    nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+
+    .external .arrow { font-size: 0.85em; margin-left: 0.25em; }
+
+    @media (max-width: 480px) { nav { gap: 1.5em; } }
+    @media (max-width: 360px) { nav { gap: 0.9em; font-size: 0.9rem; } }
+    @media (prefers-reduced-motion: reduce) { nav a::after { transition: none; } }
+    .masthead { margin: 0 0 2.5rem; }
+    .masthead a {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .masthead a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .writing-list {
+      margin-top: 2.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--hairline);
+    }
+    .lede { font-size: 0.95rem; color: var(--muted); margin: 0; max-width: 60ch; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="masthead"><a href="/">Udori Ekpin</a></p>
+    <h1>Notes</h1>
+    <p class="lede">Essays on systems, money, and what it takes to build things. The first one's on the way.</p>
+
+    <div class="writing-list">
+      <div class="role-item">
+        <div class="proj-head">
+          <span class="proj-name">How I Use AI</span>
+          <span class="tag">Coming soon</span>
+        </div>
+        <p class="proj-desc">The tools, workflows, and skills I lean on to actually get more done.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>&copy; 2025 Udori Ekpin</footer>
+
+  <nav aria-label="Primary">
+    <a href="/">Home</a>
+    <a href="/notes">Notes</a>
+  </nav>
+</body>
+</html>
